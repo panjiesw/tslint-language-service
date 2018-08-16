@@ -412,7 +412,7 @@ function init(modules: { typescript: typeof ts_module }) {
             return prior;
         };
 
-        proxy.getCodeFixesAtPosition = function (fileName: string, start: number, end: number, errorCodes: number[], formatOptions: ts.FormatCodeSettings, preferences: ts.UserPreferences): ReadonlyArray<ts.CodeFixAction> {
+        proxy.getCodeFixesAtPosition = function (fileName: string, start: number, end: number, errorCodes: ReadonlyArray<number>, formatOptions: ts.FormatCodeSettings, preferences: ts.UserPreferences): ReadonlyArray<ts.CodeFixAction> {
             let prior = oldLS.getCodeFixesAtPosition(fileName, start, end, errorCodes, formatOptions, preferences);
             if (config.supressWhileTypeErrorsPresent && prior.length > 0) {
                 return prior;
