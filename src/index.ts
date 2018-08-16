@@ -209,7 +209,7 @@ function init(modules: { typescript: typeof ts_module }) {
             };
             return configCache.configuration;
         }
-        
+
         function captureWarnings(message?: any): void {
             // TODO log to a user visible log and not only the TS-Server log
             info.project.projectService.logger.info(`[tslint] ${message}`);
@@ -221,7 +221,7 @@ function init(modules: { typescript: typeof ts_module }) {
                 span: { start: repl.start, length: repl.length }
             };
         }
-        
+
         function getReplacements(fix: tslint.Fix): tslint.Replacement[]{
             let replacements: tslint.Replacement[] = null;
             // in tslint4 a Fix has a replacement property with the Replacements
@@ -229,7 +229,7 @@ function init(modules: { typescript: typeof ts_module }) {
                 // tslint4
                 replacements = (<any>fix).replacements;
             } else {
-                // in tslint 5 a Fix is a Replacement | Replacement[]                  
+                // in tslint 5 a Fix is a Replacement | Replacement[]
                 if (!Array.isArray(fix)) {
                     replacements = [<any>fix];
                 } else {
@@ -312,7 +312,7 @@ function init(modules: { typescript: typeof ts_module }) {
                     fileName: fileName,
                     textChanges: allReplacements.map(each => convertReplacementToTextChange(each))
                 }]
-            }); 
+            });
         }
 
         function getReplacement(failure: tslint.RuleFailure, at:number): tslint.Replacement {
@@ -412,8 +412,8 @@ function init(modules: { typescript: typeof ts_module }) {
             return prior;
         };
 
-        proxy.getCodeFixesAtPosition = function (fileName: string, start: number, end: number, errorCodes: number[], formatOptions: ts.FormatCodeSettings): ReadonlyArray<ts.CodeAction> {
-            let prior = oldLS.getCodeFixesAtPosition(fileName, start, end, errorCodes, formatOptions);
+        proxy.getCodeFixesAtPosition = function (fileName: string, start: number, end: number, errorCodes: number[], formatOptions: ts.FormatCodeSettings, preferences: ts.UserPreferences): ReadonlyArray<ts.CodeFixAction> {
+            let prior = oldLS.getCodeFixesAtPosition(fileName, start, end, errorCodes, formatOptions, preferences);
             if (config.supressWhileTypeErrorsPresent && prior.length > 0) {
                 return prior;
             }
@@ -437,7 +437,7 @@ function init(modules: { typescript: typeof ts_module }) {
 
                 return fixes;
             }
-            
+
             return prior;
         };
         return proxy;
