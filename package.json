@@ -1,19 +1,18 @@
 {
-  "name": "tslint-language-service",
+  "name": "tslint-language-service-ts3",
   "version": "1.0.0",
-  "description": "tslint - language services",
+  "description": "tslint - language services (fork support ts3)",
   "main": "out/src/index.js",
   "author": "Angelo ZERR",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/angelozerr/tslint-language-service.git"
+    "url": "https://github.com/panjiesw/tslint-language-service.git"
   },
   "scripts": {
     "prepublish": "node node_modules/typescript/lib/tsc",
     "compile": "node node_modules/typescript/lib/tsc",
     "devtest": "tsc && copyfiles out/src/index.js dev/node_modules/tslint-language-service",
-    "publish": "node ./scripts/git-tag.js",
     "test": "tsc && tape out/test/**/*.spec.js",
     "lint": "tslint src/index.ts"
   },
